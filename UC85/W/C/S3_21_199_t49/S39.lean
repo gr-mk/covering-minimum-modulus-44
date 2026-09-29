@@ -1,0 +1,109 @@
+import UC85.W.C.S3_21_199_t49.Tab
+set_option maxRecDepth 1000000
+set_option maxHeartbeats 0
+set_option Elab.async false
+namespace UC85.W.C.S3_21_199_t49
+open Modulus40 UC85.W.U
+
+private theorem s_14968 : BitRUP.StepValid rupClauses rupHints 14968 := by decide +kernel
+private theorem s_14969 : BitRUP.StepValid rupClauses rupHints 14969 := by decide +kernel
+private theorem s_14970 : BitRUP.StepValid rupClauses rupHints 14970 := by decide +kernel
+private theorem s_14971 : BitRUP.StepValid rupClauses rupHints 14971 := by decide +kernel
+private theorem s_14972 : BitRUP.StepValid rupClauses rupHints 14972 := by decide +kernel
+private theorem s_14973 : BitRUP.StepValid rupClauses rupHints 14973 := by decide +kernel
+private theorem s_14974 : BitRUP.StepValid rupClauses rupHints 14974 := by decide +kernel
+private theorem s_14975 : BitRUP.StepValid rupClauses rupHints 14975 := by decide +kernel
+private theorem s_14976 : BitRUP.StepValid rupClauses rupHints 14976 := by decide +kernel
+private theorem s_14977 : BitRUP.StepValid rupClauses rupHints 14977 := by decide +kernel
+private theorem s_14978 : BitRUP.StepValid rupClauses rupHints 14978 := by decide +kernel
+private theorem s_14979 : BitRUP.StepValid rupClauses rupHints 14979 := by decide +kernel
+private theorem s_14980 : BitRUP.StepValid rupClauses rupHints 14980 := by decide +kernel
+private theorem s_14981 : BitRUP.StepValid rupClauses rupHints 14981 := by decide +kernel
+private theorem s_14982 : BitRUP.StepValid rupClauses rupHints 14982 := by decide +kernel
+private theorem s_14983 : BitRUP.StepValid rupClauses rupHints 14983 := by decide +kernel
+private theorem s_14984 : BitRUP.StepValid rupClauses rupHints 14984 := by decide +kernel
+private theorem s_14985 : BitRUP.StepValid rupClauses rupHints 14985 := by decide +kernel
+private theorem s_14986 : BitRUP.StepValid rupClauses rupHints 14986 := by decide +kernel
+private theorem s_14987 : BitRUP.StepValid rupClauses rupHints 14987 := by decide +kernel
+private theorem s_14988 : BitRUP.StepValid rupClauses rupHints 14988 := by decide +kernel
+private theorem s_14989 : BitRUP.StepValid rupClauses rupHints 14989 := by decide +kernel
+private theorem s_14990 : BitRUP.StepValid rupClauses rupHints 14990 := by decide +kernel
+private theorem s_14991 : BitRUP.StepValid rupClauses rupHints 14991 := by decide +kernel
+private theorem s_14992 : BitRUP.StepValid rupClauses rupHints 14992 := by decide +kernel
+private theorem s_14993 : BitRUP.StepValid rupClauses rupHints 14993 := by decide +kernel
+private theorem s_14994 : BitRUP.StepValid rupClauses rupHints 14994 := by decide +kernel
+private theorem s_14995 : BitRUP.StepValid rupClauses rupHints 14995 := by decide +kernel
+private theorem s_14996 : BitRUP.StepValid rupClauses rupHints 14996 := by decide +kernel
+private theorem s_14997 : BitRUP.StepValid rupClauses rupHints 14997 := by decide +kernel
+private theorem s_14998 : BitRUP.StepValid rupClauses rupHints 14998 := by decide +kernel
+private theorem s_14999 : BitRUP.StepValid rupClauses rupHints 14999 := by decide +kernel
+private theorem s_15000 : BitRUP.StepValid rupClauses rupHints 15000 := by decide +kernel
+private theorem s_15001 : BitRUP.StepValid rupClauses rupHints 15001 := by decide +kernel
+private theorem s_15002 : BitRUP.StepValid rupClauses rupHints 15002 := by decide +kernel
+private theorem s_15003 : BitRUP.StepValid rupClauses rupHints 15003 := by decide +kernel
+private theorem s_15004 : BitRUP.StepValid rupClauses rupHints 15004 := by decide +kernel
+private theorem s_15005 : BitRUP.StepValid rupClauses rupHints 15005 := by decide +kernel
+private theorem s_15006 : BitRUP.StepValid rupClauses rupHints 15006 := by decide +kernel
+private theorem s_15007 : BitRUP.StepValid rupClauses rupHints 15007 := by decide +kernel
+private theorem s_15008 : BitRUP.StepValid rupClauses rupHints 15008 := by decide +kernel
+private theorem s_15009 : BitRUP.StepValid rupClauses rupHints 15009 := by decide +kernel
+private theorem s_15010 : BitRUP.StepValid rupClauses rupHints 15010 := by decide +kernel
+private theorem s_15011 : BitRUP.StepValid rupClauses rupHints 15011 := by decide +kernel
+private theorem s_15012 : BitRUP.StepValid rupClauses rupHints 15012 := by decide +kernel
+private theorem s_15013 : BitRUP.StepValid rupClauses rupHints 15013 := by decide +kernel
+private theorem s_15014 : BitRUP.StepValid rupClauses rupHints 15014 := by decide +kernel
+private theorem s_15015 : BitRUP.StepValid rupClauses rupHints 15015 := by decide +kernel
+private theorem s_15016 : BitRUP.StepValid rupClauses rupHints 15016 := by decide +kernel
+private theorem s_15017 : BitRUP.StepValid rupClauses rupHints 15017 := by decide +kernel
+private theorem s_15018 : BitRUP.StepValid rupClauses rupHints 15018 := by decide +kernel
+private theorem s_15019 : BitRUP.StepValid rupClauses rupHints 15019 := by decide +kernel
+private theorem s_15020 : BitRUP.StepValid rupClauses rupHints 15020 := by decide +kernel
+private theorem s_15021 : BitRUP.StepValid rupClauses rupHints 15021 := by decide +kernel
+private theorem s_15022 : BitRUP.StepValid rupClauses rupHints 15022 := by decide +kernel
+private theorem s_15023 : BitRUP.StepValid rupClauses rupHints 15023 := by decide +kernel
+private theorem s_15024 : BitRUP.StepValid rupClauses rupHints 15024 := by decide +kernel
+private theorem s_15025 : BitRUP.StepValid rupClauses rupHints 15025 := by decide +kernel
+private theorem s_15026 : BitRUP.StepValid rupClauses rupHints 15026 := by decide +kernel
+private theorem s_15027 : BitRUP.StepValid rupClauses rupHints 15027 := by decide +kernel
+private theorem s_15028 : BitRUP.StepValid rupClauses rupHints 15028 := by decide +kernel
+private theorem s_15029 : BitRUP.StepValid rupClauses rupHints 15029 := by decide +kernel
+private theorem s_15030 : BitRUP.StepValid rupClauses rupHints 15030 := by decide +kernel
+private theorem s_15031 : BitRUP.StepValid rupClauses rupHints 15031 := by decide +kernel
+private theorem s_15032 : BitRUP.StepValid rupClauses rupHints 15032 := by decide +kernel
+private theorem s_15033 : BitRUP.StepValid rupClauses rupHints 15033 := by decide +kernel
+private theorem s_15034 : BitRUP.StepValid rupClauses rupHints 15034 := by decide +kernel
+private theorem s_15035 : BitRUP.StepValid rupClauses rupHints 15035 := by decide +kernel
+private theorem s_15036 : BitRUP.StepValid rupClauses rupHints 15036 := by decide +kernel
+private theorem s_15037 : BitRUP.StepValid rupClauses rupHints 15037 := by decide +kernel
+private theorem s_15038 : BitRUP.StepValid rupClauses rupHints 15038 := by decide +kernel
+private theorem s_15039 : BitRUP.StepValid rupClauses rupHints 15039 := by decide +kernel
+private theorem s_15040 : BitRUP.StepValid rupClauses rupHints 15040 := by decide +kernel
+private theorem s_15041 : BitRUP.StepValid rupClauses rupHints 15041 := by decide +kernel
+private theorem s_15042 : BitRUP.StepValid rupClauses rupHints 15042 := by decide +kernel
+private theorem s_15043 : BitRUP.StepValid rupClauses rupHints 15043 := by decide +kernel
+private theorem s_15044 : BitRUP.StepValid rupClauses rupHints 15044 := by decide +kernel
+private theorem s_15045 : BitRUP.StepValid rupClauses rupHints 15045 := by decide +kernel
+private theorem s_15046 : BitRUP.StepValid rupClauses rupHints 15046 := by decide +kernel
+private theorem s_15047 : BitRUP.StepValid rupClauses rupHints 15047 := by decide +kernel
+private theorem s_15048 : BitRUP.StepValid rupClauses rupHints 15048 := by decide +kernel
+private theorem s_15049 : BitRUP.StepValid rupClauses rupHints 15049 := by decide +kernel
+private theorem s_15050 : BitRUP.StepValid rupClauses rupHints 15050 := by decide +kernel
+private theorem s_15051 : BitRUP.StepValid rupClauses rupHints 15051 := by decide +kernel
+private theorem s_15052 : BitRUP.StepValid rupClauses rupHints 15052 := by decide +kernel
+private theorem s_15053 : BitRUP.StepValid rupClauses rupHints 15053 := by decide +kernel
+private theorem s_15054 : BitRUP.StepValid rupClauses rupHints 15054 := by decide +kernel
+private theorem s_15055 : BitRUP.StepValid rupClauses rupHints 15055 := by decide +kernel
+private theorem s_15056 : BitRUP.StepValid rupClauses rupHints 15056 := by decide +kernel
+private theorem s_15057 : BitRUP.StepValid rupClauses rupHints 15057 := by decide +kernel
+private theorem s_15058 : BitRUP.StepValid rupClauses rupHints 15058 := by decide +kernel
+private theorem s_15059 : BitRUP.StepValid rupClauses rupHints 15059 := by decide +kernel
+private theorem s_15060 : BitRUP.StepValid rupClauses rupHints 15060 := by decide +kernel
+private theorem s_15061 : BitRUP.StepValid rupClauses rupHints 15061 := by decide +kernel
+private theorem s_15062 : BitRUP.StepValid rupClauses rupHints 15062 := by decide +kernel
+private theorem s_15063 : BitRUP.StepValid rupClauses rupHints 15063 := by decide +kernel
+private theorem s_15064 : BitRUP.StepValid rupClauses rupHints 15064 := by decide +kernel
+private theorem s_15065 : BitRUP.StepValid rupClauses rupHints 15065 := by decide +kernel
+theorem sBlock39 : ∀ k < 98, BitRUP.StepValid rupClauses rupHints (14968 + k) := fun k hk =>
+  ((Fin.cases s_14968 (Fin.cases s_14969 (Fin.cases s_14970 (Fin.cases s_14971 (Fin.cases s_14972 (Fin.cases s_14973 (Fin.cases s_14974 (Fin.cases s_14975 (Fin.cases s_14976 (Fin.cases s_14977 (Fin.cases s_14978 (Fin.cases s_14979 (Fin.cases s_14980 (Fin.cases s_14981 (Fin.cases s_14982 (Fin.cases s_14983 (Fin.cases s_14984 (Fin.cases s_14985 (Fin.cases s_14986 (Fin.cases s_14987 (Fin.cases s_14988 (Fin.cases s_14989 (Fin.cases s_14990 (Fin.cases s_14991 (Fin.cases s_14992 (Fin.cases s_14993 (Fin.cases s_14994 (Fin.cases s_14995 (Fin.cases s_14996 (Fin.cases s_14997 (Fin.cases s_14998 (Fin.cases s_14999 (Fin.cases s_15000 (Fin.cases s_15001 (Fin.cases s_15002 (Fin.cases s_15003 (Fin.cases s_15004 (Fin.cases s_15005 (Fin.cases s_15006 (Fin.cases s_15007 (Fin.cases s_15008 (Fin.cases s_15009 (Fin.cases s_15010 (Fin.cases s_15011 (Fin.cases s_15012 (Fin.cases s_15013 (Fin.cases s_15014 (Fin.cases s_15015 (Fin.cases s_15016 (Fin.cases s_15017 (Fin.cases s_15018 (Fin.cases s_15019 (Fin.cases s_15020 (Fin.cases s_15021 (Fin.cases s_15022 (Fin.cases s_15023 (Fin.cases s_15024 (Fin.cases s_15025 (Fin.cases s_15026 (Fin.cases s_15027 (Fin.cases s_15028 (Fin.cases s_15029 (Fin.cases s_15030 (Fin.cases s_15031 (Fin.cases s_15032 (Fin.cases s_15033 (Fin.cases s_15034 (Fin.cases s_15035 (Fin.cases s_15036 (Fin.cases s_15037 (Fin.cases s_15038 (Fin.cases s_15039 (Fin.cases s_15040 (Fin.cases s_15041 (Fin.cases s_15042 (Fin.cases s_15043 (Fin.cases s_15044 (Fin.cases s_15045 (Fin.cases s_15046 (Fin.cases s_15047 (Fin.cases s_15048 (Fin.cases s_15049 (Fin.cases s_15050 (Fin.cases s_15051 (Fin.cases s_15052 (Fin.cases s_15053 (Fin.cases s_15054 (Fin.cases s_15055 (Fin.cases s_15056 (Fin.cases s_15057 (Fin.cases s_15058 (Fin.cases s_15059 (Fin.cases s_15060 (Fin.cases s_15061 (Fin.cases s_15062 (Fin.cases s_15063 (Fin.cases s_15064 (Fin.cases s_15065 (fun k => Fin.elim0 k))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))) : ∀ k : Fin 98, BitRUP.StepValid rupClauses rupHints (14968 + k.val)) ⟨k, hk⟩
+
+end UC85.W.C.S3_21_199_t49

@@ -1,0 +1,339 @@
+\documentclass[11pt]{amsart}
+\usepackage[margin=1.1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{booktabs}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{hyperref}
+\hypersetup{colorlinks=true,linkcolor=blue!50!black,citecolor=blue!50!black,urlcolor=blue!50!black}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\up}{{\uparrow}}
+
+\title{A covering system with minimum modulus 44}
+% TODO(author): confirm name, affiliation and e-mail.
+\author{Grayson MacKenzie}
+\date{September 2026}
+
+\def\UrlBreaks{\do\/\do-\do.}
+\begin{document}
+
+\begin{abstract}
+We construct a covering system of the integers with pairwise distinct moduli whose least modulus is $44$. Nielsen (2009) constructed such a system with least modulus $40$, and Owens (2014) extended the method to $42$.
+Starting from a variant of Owens's construction, we extend it twice, first to least modulus $43$ and then to $44$. The new material
+consists of roots on fresh primes up to $211$, small ``device'' families, and in-place repairs found by an exact
+counterexample loop. The final system consists of $618{,}413$ families of congruences on $47$ primes; after a
+standard finite truncation it is a finite covering system. Coverage was decided exactly, twice, by independent SAT
+encodings whose unsatisfiability proofs were checked by independent proof checkers. The result is also proved in
+Lean~4: the theorem \texttt{UC85.minimumModulus44} states that a covering system with distinct moduli and least
+modulus exactly $44$ exists, and it depends only on the standard axioms.
+\end{abstract}
+
+\maketitle
+
+\section{Introduction}
+
+A \emph{covering system} is a finite set of congruence classes $a_1 \bmod m_1, \dots, a_k \bmod m_k$ whose union is
+$\Z$. Erdős introduced covering systems with distinct moduli in 1950 \cite{Erdos50}. He asked whether the least
+modulus of such a system can be arbitrarily large, a question he later described as perhaps his favourite problem.
+Hough \cite{Hough15} answered it in the negative, building on Filaseta, Ford, Konyagin, Pomerance and Yu
+\cite{FFKPY07}: every covering system with distinct moduli has least modulus at most $10^{16}$. Balister, Bollobás,
+Morris, Sahasrabudhe and Tiba \cite{BBMST22} gave a simpler proof and lowered the bound to $616{,}000$.
+
+Constructions lag far behind this bound. Successive records raised the least modulus to $25$ (Gibson
+\cite{Gibson09}) and to $40$ (Nielsen \cite{Nielsen09}); see \cite{Nielsen09} for the history. Owens
+\cite{Owens14} extended Nielsen's method to $42$ in a master's thesis. A Lean formalization of Nielsen's system
+exists \cite{Mod40Lean}.
+
+\begin{theorem}\label{thm:main}
+There is a covering system of $\Z$ with pairwise distinct moduli whose least modulus is $44$.
+\end{theorem}
+
+\noindent Our contributions are as follows.
+\begin{enumerate}
+\item \emph{The starting system} (§\ref{sec:owens}). We work with UC85, a variant of Owens's construction that
+  differs from it in the placement of two carrier congruences and in the arrangement of four later sections. It
+  has $356{,}364$ families and least modulus $42$.
+\item \emph{From $42$ to $43$ to $44$} (§§\ref{sec:43}–\ref{sec:44}). We cut the unique modulus-$42$ family back to
+  its deeper levels. We then re-cover exactly what it alone covered, using roots on fresh primes $89$–$173$, a small
+  device and in-place fills. We do the same for the unique modulus-$43$ family, with a $41$-arrow in its slot, slot
+  fills, roots on fresh primes $179$–$211$ and $1{,}801$ repairs found by an exact counterexample loop. Every modulus
+  from $44$ to $160$ except $121$ is used exactly once in the final system.
+\item \emph{Verification} (§\ref{sec:verify}). Two independent exact checks establish coverage. Each builds a finite
+  propositional formula that is satisfiable exactly when some integer other than a ray centre is uncovered (the
+  single ray centre left is covered by the finite completion of §\ref{sec:prelim}); the formula is unsatisfiable,
+  and every step of the solver's refutation is checked by separate programs. Both checks also confirm distinct
+  moduli. The theorem is further proved in Lean~4 \cite{Lean4} with Mathlib \cite{Mathlib}; the proof depends only
+  on \texttt{propext}, \texttt{Classical.choice} and \texttt{Quot.sound}, and an independent audit re-checked the
+  statement and a sample of modules in the kernel.
+\end{enumerate}
+
+\noindent The Lean development and its build instructions are in the repository
+\url{https://github.com/gr-mk/covering-minimum-modulus-44}.
+
+\section{Families, distinct moduli and finite completion}\label{sec:prelim}
+
+\subsection*{Selectors and families}
+We describe congruence classes through \emph{selectors} on single primes. For a prime $p$:
+\begin{itemize}
+\item a \emph{fixed} selector $p{:}\,r \bmod p^k$ matches $x$ when $x \equiv r \pmod{p^k}$;
+\item a \emph{ray} selector $\mathrm{ray}(p,[\ell,h],c,d)$, with $1\le \ell\le h\le\infty$, centre $c\in\Z$ and
+  digit $d\in\{1,\dots,p-1\}$, matches $x \ne c$ when $e := 1+v_p(x-c)$ lies in $[\ell,h]$ and
+  $(x-c)/p^{e-1} \equiv d \pmod p$.
+\end{itemize}
+Equivalently, the ray matches the classes $x \equiv c + d\,p^{e-1} \pmod{p^e}$ for $\ell\le e\le h$. A \emph{family}
+is a product of selectors on distinct primes, and it matches $x$ when every selector does. Choosing one level $e_p$
+for each ray, a family is a union of single residue classes, one for each exponent vector, with modulus
+$\prod_p p^{e_p}$ (where $e_p=k$ for a fixed selector). These exponent vectors form the family's \emph{exponent box}.
+
+\subsection*{Distinct moduli}
+Every modulus of a family is divisible by exactly the primes of its support. Two families with different supports
+therefore never share a modulus, and the moduli of a system are pairwise distinct exactly when, among families with
+a common support, the exponent boxes are pairwise disjoint.
+
+\subsection*{Ray centres and finite completion}
+A ray never matches its own centre. Consequently a system of families can cover every integer except finitely many
+\emph{ray centres}. Our final system misses only the integer $0$.
+
+The finite completion follows the reduction in \cite{Mod40Lean}. It truncates every ray at a common depth and adds
+finitely many ``caps'' built with a fresh prime $P$ (a prime dividing no modulus of the system), so that the
+truncated tails and the ray centres are covered. The result is a finite covering system with distinct moduli. The
+cap moduli are at least $64$, so the least modulus is unchanged whenever it is at most $64$. We use $P=223$.
+
+\section{The starting system}\label{sec:owens}
+
+We use the notation of Nielsen \cite{Nielsen09} and Owens \cite{Owens14}. A $q$-arrow
+$q\up(A_1,\dots,A_{q-1})$ covers a region by assigning to each nonzero $q$-adic digit $j$ an \emph{input} $A_j$,
+itself a set of congruences (with multipliers) that covers the region inside that digit's slot. Inputs of the form
+$m$ (a bare multiplier) give single congruences whose modulus is $q$ times $m$ at the first level.
+
+Owens's construction has the same shape as Nielsen's:
+\begin{itemize}
+\item a base on the primes $2,3,5$ (§§3.1–3.3);
+\item sections for the primes $7$ to $83$ (§§3.4–3.20, the last three holding two primes each), whose arrows
+  cover the parts of $\Z$ the earlier sections leave open.
+\end{itemize}
+The least modulus $42 = 2\cdot3\cdot7$ is attained once, by the family $2{:}0 \bmod 2 \cdot 3{:}1 \bmod 3 \cdot
+\mathrm{ray}(7,[1,\infty),0,3)$ of §3.4.
+
+\subsection*{The variant UC85}
+UC85 differs from Owens's construction \cite{Owens14} in three ways.
+\begin{enumerate}
+\item The modulus-$55$ congruence of §3.5, the bare input $1$ of the sixth input $5\up(1,2,3\cdot1,4)$ of the
+  $11$-arrow, is placed at $1 \bmod 5$, as in Nielsen's construction.
+\item The modulus-$85$ congruence of §3.7, the bare $1$ in a $5\up(1,2,4,8\up)$ input of its $17$-arrow, is placed at
+  $4 \bmod 5$ by permuting that $5$-arrow to $5\up(8\up,2,4,1)$. This gives §3.18's $67$-arrow a carried
+  $17$-slot, and §3.18 then needs no $89$-arrow.
+\item The arrow layers of §§3.12, 3.14, 3.15 and 3.18 are arranged by an exact planner (a subset dynamic
+  programme over the available input sets).
+\end{enumerate}
+The result has $356{,}364$ families on the $23$ primes $2,\dots,83$. Its least modulus is $42$, attained once. It was
+certified by the method of §\ref{sec:verify} and proved in Lean in the same way as the main theorem.
+
+\section{From 42 to 43}\label{sec:43}
+
+Let $F_{42}$ be the modulus-$42$ family above. Changing its ray to $\mathrm{ray}(7,[2,\infty),0,3)$ removes exactly the
+level-one class $10 \bmod 42$ and keeps the moduli $2\cdot3\cdot7^e$ for $e\ge2$. Most of $10 \bmod 42$ is still
+covered by other families. The exact uncovered part $U$ is $2.1\%$ of the class, about $4.95\cdot10^{-4}$ of $\Z$,
+spread over $14$ cells of the form ($2$-adic valuation, residue mod~$5$). We re-cover $U$ with three ingredients:
+
+\begin{itemize}
+\item \textbf{A $7$-device.} Seven families on $\mathrm{ray}(7,[2,\infty),-4,j)$ inside $3 \bmod 7$, with moduli
+  from $49$ to $23{,}520$. They cover fixed $7$-digits of $x+4$ exactly, and so act as exact carries for deeper
+  covers.
+\item \textbf{In-place fills.} $604$ families placed in empty slots of §§3.10, 3.12 and 3.15 (respectively $3$,
+  $75$ and $526$).
+\item \textbf{Seventeen roots on fresh primes} $89$, $97$, $101$, $103$, $107$, $109$, $113$, $127$, $131$, $137$, $139$,
+  $149$, $151$, $157$, $163$, $167$ and $173$. Each root $q\up$ covers one pinned piece of $U$ with $q-1$ inputs. The inputs are built from the
+  other primes together with carries certified exactly: the device's digits, and root digits proved covered by an
+  exact gate.
+\end{itemize}
+
+The resulting system has $540{,}826$ families on $40$ primes. Its least modulus is $43$, attained once by the
+digit-$1$ input of §3.14's $43$-arrow. The moduli $43,\dots,48$ each occur once. Only $F_{42}$ was changed and
+nothing was removed; this was checked independently.
+
+\section{From 43 to 44}\label{sec:44}
+
+The unique modulus-$43$ family is the multiplier-$1$ input $\mathrm{ray}(43,[1,\infty),0,1)$ of §3.14. We replace it
+by its tail $\mathrm{ray}(43,[2,\infty),0,1)$, whose least modulus is $1{,}849$, and re-cover what its first level
+alone covered.
+\begin{enumerate}
+\item \textbf{A $41$-arrow in its slot.} In §3.14 the slot is filled by a $41$-arrow built from the section's other
+  inputs ($177$ families). §3.14's region then closes exactly.
+\item \textbf{Slot fills.} The removed family also carried the $43$-slot $1$ of every inner $43$-arrow elsewhere. We
+  fill slot $1$ of all $264$ affected $43$-arrow copies in §§3.15–3.19 ($1{,}183$ families) and add $2$ families at
+  one input of §3.20's $83$-arrow.
+\item \textbf{Exact census.} What is still uncovered lies in $1{,}282$ pieces, all inside $22$ root inputs of the
+  $67$- and $73$-arrows of §§3.18–3.19. Their total measure is estimated, by sampling, at about $10^{-8}$ of $\Z$. The census is certified
+  complete by a gate formula that is unsatisfiable with all pieces blocked ($160$ sub-cubes, all with checked
+  proofs).
+\item \textbf{Closing it.} Seven roots on the fresh primes $179, 181, 191, 193, 197, 199, 211$ ($74{,}424$ families)
+  cover the heavy inputs. $1{,}801$ further families come from an exact counterexample loop: each uncovered point
+  is traced to the input that misses it, and that input receives one thin family or a small local arrow, checked for
+  collisions against the whole system.
+\end{enumerate}
+
+The final system has $618{,}413$ families on the $47$ primes $2,\dots,211$. Its least modulus is $44$, attained
+once by $2{:}1 \bmod 4 \cdot \mathrm{ray}(11,[1,\infty),0,1)$ of §3.5. Table~\ref{tab:ladder} shows how densely the
+smallest moduli are packed.
+
+\begin{table}[ht]
+\centering
+\caption{Moduli $m\le160$ of the final system. Each is used by exactly one family. The only integer in $[44,160]$
+that is not a modulus is $121$.}\label{tab:ladder}
+\begin{tabular}{@{}ll@{}}
+\toprule
+range & moduli used\\
+\midrule
+$44$–$120$ & all $77$ integers\\
+$121$ & not used\\
+$122$–$160$ & all $39$ integers\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Verification}\label{sec:verify}
+
+\subsection*{Exact coverage}
+For each prime $p$ of the system, the selectors on $p$ partition $\Z$ into finitely many \emph{local atoms}. These
+are residue classes modulo a fixed power of $p$, plus, for each ray, one atom per level up to a cap and one
+``deep'' atom for the levels beyond it; a ray centre is its own limit atom. An integer's atoms on the different
+primes determine which families contain it. Conversely, by the Chinese remainder theorem, every combination of atoms
+is realised by some integer. Coverage of $\Z$ outside the ray centres is therefore equivalent to the
+unsatisfiability of a propositional formula. That formula has one variable per atom, one exactly-one constraint per
+prime, and one clause per family forbidding its atoms.
+
+For the final system the formula has $618{,}804$ clauses. CaDiCaL \cite{CaDiCaL} proves it unsatisfiable, and two
+further steps check that refutation:
+\begin{itemize}
+\item drat-trim \cite{DRATtrim} verifies the DRAT proof;
+\item the trimmed LRAT proof is replayed step by step as pure reverse unit propagation ($77.7$ million hints).
+\end{itemize}
+
+A second check shares no code with the first:
+\begin{itemize}
+\item It reads the system with inert stand-ins, so none of the builder's code runs.
+\item It uses two separately written encoders. Their refutations were checked by drat-trim, by lrat-check, and by
+  kissat \cite{Kissat} combined with drat-trim.
+\item Mutation controls confirm that neither encoder is vacuous. Removing a single needed root, repair or fill family
+  makes the formula satisfiable, and the decoded model is an integer that only the removed family covers.
+\end{itemize}
+
+\subsection*{Distinct moduli and least modulus}
+The second check confirms distinct moduli in two ways:
+\begin{itemize}
+\item a sweep over exponent boxes within each support;
+\item a brute-force expansion of every modulus up to $10^{12}$, with no repeats and none below $44$.
+\end{itemize}
+Every family is well formed: its primes are sorted with one selector each, residues and digits are in range, and
+$\ell\ge1$. A total of $50{,}912{,}769$ sampled integers (not a proof) were all covered, except the ray centre $0$.
+
+\subsection*{Lean formalization}
+The main theorem is
+\[
+\texttt{UC85.minimumModulus44 : UC85.MinimumModulusN 44},
+\]
+where $\texttt{MinimumModulusN}\;n$ states that there is a finite list of congruence classes over $\Z$ covering every
+integer, with pairwise distinct moduli, all greater than $1$, and least modulus exactly $n$. For $n=42$ this is
+definitionally the statement of \cite{Mod40Lean}.
+
+\noindent The proof has four parts:
+\begin{itemize}
+\item \emph{Coverage.} It replays $61$ SAT refutations ($22.3$ million hints) with a bitmask checker for reverse unit
+  propagation. The refutations cover the sections and the root pieces; a glue lemma assembles them into a covering
+  of $\Z$.
+\item \emph{Distinct moduli.} It walks a guillotine tree over the exponent boxes, of depth $52$ with one family per
+  leaf.
+\item \emph{Least modulus.} It checks per-family lower bounds with a witness family.
+\item \emph{Finite completion.} It applies the finite completion of §\ref{sec:prelim} with $P=223$. Primality and
+  freshness are proved inside the term.
+\end{itemize}
+
+The development has $7{,}963$ Lean files, $7{,}933$ of them generated. A full build takes about $250$ CPU-hours on
+Lean~4.24.0 with Mathlib.
+
+\noindent An independent audit confirmed:
+\begin{itemize}
+\item the build is current;
+\item the axioms are only \texttt{propext}, \texttt{Classical.choice} and \texttt{Quot.sound};
+\item the statement is equivalent to a from-scratch restatement;
+\item the theorem is a closed term;
+\item no \texttt{sorry}, \texttt{native\_decide}, \texttt{axiom}, \texttt{unsafe} or kernel-skipping option occurs.
+\end{itemize}
+It also re-checked $130$ key modules ($68{,}799$ declarations) in the kernel with lean4checker's replay; a full replay
+had accepted $5{,}380$ of $7{,}962$ modules, with no rejection, when it was paused. UC85 and the $43$ are formalized in the same
+way.
+
+\section{Remarks on 45 and beyond}\label{sec:beyond}
+
+The same method does not obviously reach $45$. That would require removing the unique modulus-$44$ family, of §3.5.
+\begin{itemize}
+\item \emph{Patching.} Truncating that family opens about $3\cdot10^{-4}$ of $\Z$ in $78$ separate cells. A root on a
+  fresh prime can cover only about one cell, and only primes up to about $257$ have enough room.
+\item \emph{Re-planning inside the original regions.} Exact capacity certificates rule out re-planning §3.5 inside its
+  region with the primes the system already uses. The shortfall is $5.3\%$ at the first $11$-level and $2.5\%$ for
+  §§3.5, 3.7 and 3.11 jointly.
+\item \emph{The remaining route.} Redrawing the region boundaries between §§3.5–3.7 is not excluded. With a new kind
+  of root on free prime-pair copies of the lattice, everything except the region of a re-planned §3.6 can be covered
+  exactly; the remaining integer problem is open.
+\end{itemize}
+Beyond $45$, the base on $2,3,5$ is itself saturated: it uses every $\{2,3,5\}$-smooth modulus at least $43$ exactly
+once. Any construction of this type reaching $46$ or more needs a different base.
+
+\section*{Acknowledgments}
+The search, certification and Lean engineering described here were carried out with extensive assistance from
+Claude, an AI model developed by Anthropic, working under the author's direction on the author's computing
+resources. All results were checked by the exact methods of §\ref{sec:verify}, and the main theorem by the Lean kernel.
+
+\begin{thebibliography}{99}
+
+\bibitem{BBMST22} P.~Balister, B.~Bollobás, R.~Morris, J.~Sahasrabudhe and M.~Tiba, \emph{On the Erdős covering
+problem: the density of the uncovered set}, Invent. Math. \textbf{228} (2022), 377--414.
+
+\bibitem{CaDiCaL} A.~Biere, K.~Fazekas, M.~Fleury and M.~Heisinger, \emph{CaDiCaL, Kissat, Paracooba, Plingeling and
+Treengeling entering the SAT Competition 2020}, Proc. SAT Competition 2020.
+
+\bibitem{Kissat} A.~Biere and M.~Fleury, \emph{Gimsatul, IsaSAT and Kissat entering the SAT Competition 2022}, Proc.
+SAT Competition 2022.
+
+\bibitem{Lean4} L.~de Moura and S.~Ullrich, \emph{The Lean 4 theorem prover and programming language}, in: CADE-28,
+Lecture Notes in Comput. Sci. \textbf{12699}, Springer, 2021, 625--635.
+
+\bibitem{Erdos50} P.~Erdős, \emph{On integers of the form $2^k+p$ and some related problems}, Summa Brasil. Math.
+\textbf{2} (1950), 113--123.
+
+\bibitem{FFKPY07} M.~Filaseta, K.~Ford, S.~Konyagin, C.~Pomerance and G.~Yu, \emph{Sieving by large integers and
+covering systems of congruences}, J. Amer. Math. Soc. \textbf{20} (2007), 495--517.
+
+\bibitem{Gibson09} D.~J.~Gibson, \emph{A covering system with least modulus 25}, Math. Comp. \textbf{78} (2009),
+1127--1146.
+
+\bibitem{Hough15} R.~Hough, \emph{Solution of the minimum modulus problem for covering systems}, Ann. of Math. (2)
+\textbf{181} (2015), 361--382.
+
+\bibitem{Mod40Lean} G.~MacKenzie, \emph{modulus-40-lean: a Lean formalization of a covering system with smallest
+modulus 40}, \url{https://github.com/gr-mk/modulus-40-lean}, 2026.
+
+\bibitem{Mathlib} The mathlib Community, \emph{The Lean mathematical library}, in: CPP 2020, ACM, 2020, 367--381.
+
+\bibitem{Nielsen09} P.~P.~Nielsen, \emph{A covering system whose smallest modulus is 40}, J. Number Theory
+\textbf{129} (2009), 640--666.
+
+\bibitem{Owens14} T.~E.~Owens, \emph{A covering system with minimum modulus 42}, Master's thesis, Brigham Young
+University, 2014.
+
+\bibitem{DRATtrim} N.~Wetzler, M.~J.~H.~Heule and W.~A.~Hunt~Jr., \emph{DRAT-trim: efficient checking and trimming
+using expressive clausal proofs}, in: SAT 2014, Lecture Notes in Comput. Sci. \textbf{8561}, Springer, 2014,
+422--429.
+
+\end{thebibliography}
+
+\end{document}

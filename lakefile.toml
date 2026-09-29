@@ -1,0 +1,22 @@
+name = "covering44"
+version = "0.1.0"
+defaultTargets = ["Covering44"]
+moreLeanArgs = ["--tstack=524288"]
+
+[[require]]
+name = "mathlib"
+scope = "leanprover-community"
+git = "https://github.com/leanprover-community/mathlib4.git"
+rev = "v4.24.0"
+
+[[lean_lib]]
+name = "Modulus40"
+moreLeanArgs = ["--tstack=524288"]
+
+[[lean_lib]]
+name = "UC85"
+moreLeanArgs = ["--tstack=524288"]
+
+[[lean_lib]]
+name = "Covering44"
+moreLeanArgs = ["--tstack=524288"]

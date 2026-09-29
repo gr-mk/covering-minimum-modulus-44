@@ -1,0 +1,7 @@
+set_option maxRecDepth 1000000
+set_option maxHeartbeats 0
+namespace UC85.W.C.G3_a8
+
+def hintAtC0 : Array Nat := #[0x10000800007000060000500004000130001200011000100000f0000e0000d0000c0000b0000a000090000300002]
+
+end UC85.W.C.G3_a8

@@ -1,0 +1,21 @@
+import UC85.W.C.S3_21_131_t35.Tab
+set_option maxRecDepth 1000000
+set_option maxHeartbeats 0
+set_option Elab.async false
+namespace UC85.W.C.S3_21_131_t35
+open Modulus40 UC85.W.U
+
+theorem oBlock224 : ∀ k < 128, E.originOK (origin (28672 + k)) (rupClauses (28672 + k)) = true := by
+  decide +kernel
+theorem oBlock225 : ∀ k < 128, E.originOK (origin (28800 + k)) (rupClauses (28800 + k)) = true := by
+  decide +kernel
+theorem oBlock226 : ∀ k < 128, E.originOK (origin (28928 + k)) (rupClauses (28928 + k)) = true := by
+  decide +kernel
+theorem oBlock227 : ∀ k < 128, E.originOK (origin (29056 + k)) (rupClauses (29056 + k)) = true := by
+  decide +kernel
+theorem oBlock228 : ∀ k < 128, E.originOK (origin (29184 + k)) (rupClauses (29184 + k)) = true := by
+  decide +kernel
+theorem oBlock229 : ∀ k < 83, E.originOK (origin (29312 + k)) (rupClauses (29312 + k)) = true := by
+  decide +kernel
+
+end UC85.W.C.S3_21_131_t35
