@@ -17,7 +17,9 @@ For `n = 42` it is definitionally the statement `Modulus42.MinimumModulus42` of
 Nielsen (2009) constructed a covering system with least modulus 40, and Owens (2014) extended the method to 42.
 This system builds on a variant of Owens's construction. The accompanying paper,
 [`paper/covering44.pdf`](paper/covering44.pdf) (LaTeX source: `paper/covering44.tex`), describes the steps to 43 and
-44 and how the result was verified.
+44 and how the result was verified. A second paper, [`paper/ideas44.pdf`](paper/ideas44.pdf) (source:
+`paper/ideas44.tex`), explains the ideas behind the construction in the style of Nielsen and Owens. These include
+carrier routing, the device on the prime 7, fresh roots and the nested 41-arrow.
 
 ## Checking the proof
 
