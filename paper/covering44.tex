@@ -31,9 +31,7 @@ Starting from a variant of Owens's construction, we extend it twice, first to le
 consists of roots on fresh primes up to $211$, small ``device'' families, and in-place repairs found by an exact
 counterexample loop. The final system consists of $618{,}413$ families of congruences on $47$ primes; after a
 standard finite truncation it is a finite covering system. Coverage was decided exactly, twice, by independent SAT
-encodings whose unsatisfiability proofs were checked by independent proof checkers. The result is also proved in
-Lean~4: the theorem \texttt{UC85.minimumModulus44} states that a covering system with distinct moduli and least
-modulus exactly $44$ exists, and it depends only on the standard axioms.
+encodings whose unsatisfiability proofs were checked by independent proof checkers.
 \end{abstract}
 
 \maketitle
@@ -49,8 +47,7 @@ Morris, Sahasrabudhe and Tiba \cite{BBMST22} gave a simpler proof and lowered th
 
 Constructions lag far behind this bound. Successive records raised the least modulus to $25$ (Gibson
 \cite{Gibson09}) and to $40$ (Nielsen \cite{Nielsen09}); see \cite{Nielsen09} for the history. Owens
-\cite{Owens14} extended Nielsen's method to $42$ in a master's thesis. A Lean formalization of Nielsen's system
-exists \cite{Mod40Lean}.
+\cite{Owens14} extended Nielsen's method to $42$ in a master's thesis.
 
 \begin{theorem}\label{thm:main}
 There is a covering system of $\Z$ with pairwise distinct moduli whose least modulus is $44$.
@@ -70,12 +67,10 @@ There is a covering system of $\Z$ with pairwise distinct moduli whose least mod
   propositional formula that is satisfiable exactly when some integer other than a ray centre is uncovered (the
   single ray centre left is covered by the finite completion of §\ref{sec:prelim}); the formula is unsatisfiable,
   and every step of the solver's refutation is checked by separate programs. Both checks also confirm distinct
-  moduli. The theorem is further proved in Lean~4 \cite{Lean4} with Mathlib \cite{Mathlib}; the proof depends only
-  on \texttt{propext}, \texttt{Classical.choice} and \texttt{Quot.sound}, and an independent audit re-checked the
-  statement and a sample of modules in the kernel.
+  moduli.
 \end{enumerate}
 
-\noindent The Lean development and its build instructions are in the repository
+\noindent The complete list of families and the certificates are available at
 \url{https://github.com/gr-mk/covering-minimum-modulus-44}.
 
 \section{Families, distinct moduli and finite completion}\label{sec:prelim}
@@ -102,10 +97,11 @@ a common support, the exponent boxes are pairwise disjoint.
 A ray never matches its own centre. Consequently a system of families can cover every integer except finitely many
 \emph{ray centres}. Our final system misses only the integer $0$.
 
-The finite completion follows the reduction in \cite{Mod40Lean}. It truncates every ray at a common depth and adds
-finitely many ``caps'' built with a fresh prime $P$ (a prime dividing no modulus of the system), so that the
-truncated tails and the ray centres are covered. The result is a finite covering system with distinct moduli. The
-cap moduli are at least $64$, so the least modulus is unchanged whenever it is at most $64$. We use $P=223$.
+Rays are infinite recursions, and we make the system finite as Nielsen does \cite[§2]{Nielsen09}. Each ray is
+truncated at a sufficiently deep level, and the finitely many deep classes that remain, including the ray centre
+$0$, are covered by congruences that also involve an auxiliary prime $P$ dividing no other modulus. Distinct powers
+of the prime of the ray (and of $P$ where necessary) keep all moduli distinct, and every new modulus is a multiple
+of $P$, so it exceeds $44$. We take $P=223$, the least prime not used by the system.
 
 \section{The starting system}\label{sec:owens}
 
@@ -135,7 +131,7 @@ UC85 differs from Owens's construction \cite{Owens14} in three ways.
   programme over the available input sets).
 \end{enumerate}
 The result has $356{,}364$ families on the $23$ primes $2,\dots,83$. Its least modulus is $42$, attained once. It was
-certified by the method of §\ref{sec:verify} and proved in Lean in the same way as the main theorem.
+certified by the method of §\ref{sec:verify}.
 
 \section{From 42 to 43}\label{sec:43}
 
@@ -236,42 +232,6 @@ The second check confirms distinct moduli in two ways:
 Every family is well formed: its primes are sorted with one selector each, residues and digits are in range, and
 $\ell\ge1$. A total of $50{,}912{,}769$ sampled integers (not a proof) were all covered, except the ray centre $0$.
 
-\subsection*{Lean formalization}
-The main theorem is
-\[
-\texttt{UC85.minimumModulus44 : UC85.MinimumModulusN 44},
-\]
-where $\texttt{MinimumModulusN}\;n$ states that there is a finite list of congruence classes over $\Z$ covering every
-integer, with pairwise distinct moduli, all greater than $1$, and least modulus exactly $n$. For $n=42$ this is
-definitionally the statement of \cite{Mod40Lean}.
-
-\noindent The proof has four parts:
-\begin{itemize}
-\item \emph{Coverage.} It replays $61$ SAT refutations ($22.3$ million hints) with a bitmask checker for reverse unit
-  propagation. The refutations cover the sections and the root pieces; a glue lemma assembles them into a covering
-  of $\Z$.
-\item \emph{Distinct moduli.} It walks a guillotine tree over the exponent boxes, of depth $52$ with one family per
-  leaf.
-\item \emph{Least modulus.} It checks per-family lower bounds with a witness family.
-\item \emph{Finite completion.} It applies the finite completion of §\ref{sec:prelim} with $P=223$. Primality and
-  freshness are proved inside the term.
-\end{itemize}
-
-The development has $7{,}963$ Lean files, $7{,}933$ of them generated. A full build takes about $250$ CPU-hours on
-Lean~4.24.0 with Mathlib.
-
-\noindent An independent audit confirmed:
-\begin{itemize}
-\item the build is current;
-\item the axioms are only \texttt{propext}, \texttt{Classical.choice} and \texttt{Quot.sound};
-\item the statement is equivalent to a from-scratch restatement;
-\item the theorem is a closed term;
-\item no \texttt{sorry}, \texttt{native\_decide}, \texttt{axiom}, \texttt{unsafe} or kernel-skipping option occurs.
-\end{itemize}
-It also re-checked $130$ key modules ($68{,}799$ declarations) in the kernel with lean4checker's replay; a full replay
-had accepted $5{,}380$ of $7{,}962$ modules, with no rejection, when it was paused. UC85 and the $43$ are formalized in the same
-way.
-
 \section{Remarks on 45 and beyond}\label{sec:beyond}
 
 The same method does not obviously reach $45$. That would require removing the unique modulus-$44$ family, of §3.5.
@@ -289,9 +249,9 @@ Beyond $45$, the base on $2,3,5$ is itself saturated: it uses every $\{2,3,5\}$-
 once. Any construction of this type reaching $46$ or more needs a different base.
 
 \section*{Acknowledgments}
-The search, certification and Lean engineering described here were carried out with extensive assistance from
+The search and the certification described here were carried out with extensive assistance from
 Claude, an AI model developed by Anthropic, working under the author's direction on the author's computing
-resources. All results were checked by the exact methods of §\ref{sec:verify}, and the main theorem by the Lean kernel.
+resources. All results were checked by the exact methods of §\ref{sec:verify}.
 
 \begin{thebibliography}{99}
 
@@ -304,9 +264,6 @@ Treengeling entering the SAT Competition 2020}, Proc. SAT Competition 2020.
 \bibitem{Kissat} A.~Biere and M.~Fleury, \emph{Gimsatul, IsaSAT and Kissat entering the SAT Competition 2022}, Proc.
 SAT Competition 2022.
 
-\bibitem{Lean4} L.~de Moura and S.~Ullrich, \emph{The Lean 4 theorem prover and programming language}, in: CADE-28,
-Lecture Notes in Comput. Sci. \textbf{12699}, Springer, 2021, 625--635.
-
 \bibitem{Erdos50} P.~Erdős, \emph{On integers of the form $2^k+p$ and some related problems}, Summa Brasil. Math.
 \textbf{2} (1950), 113--123.
 
@@ -318,11 +275,6 @@ covering systems of congruences}, J. Amer. Math. Soc. \textbf{20} (2007), 495--5
 
 \bibitem{Hough15} R.~Hough, \emph{Solution of the minimum modulus problem for covering systems}, Ann. of Math. (2)
 \textbf{181} (2015), 361--382.
-
-\bibitem{Mod40Lean} G.~MacKenzie, \emph{modulus-40-lean: a Lean formalization of a covering system with smallest
-modulus 40}, \url{https://github.com/gr-mk/modulus-40-lean}, 2026.
-
-\bibitem{Mathlib} The mathlib Community, \emph{The Lean mathematical library}, in: CPP 2020, ACM, 2020, 367--381.
 
 \bibitem{Nielsen09} P.~P.~Nielsen, \emph{A covering system whose smallest modulus is 40}, J. Number Theory
 \textbf{129} (2009), 640--666.
